@@ -35,4 +35,8 @@ public class BoardService {
 
         boardRepository.deleteById(id);
     }
+
+    public void save(Board board) {
+        boardRepository.save(board);
+    }
 }

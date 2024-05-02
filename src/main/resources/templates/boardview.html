@@ -3,14 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>게시글 상세 페이지</title>
+    <style>
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .like-btn {
+            background-color: white;
+            border: 1px solid red;
+            color: red;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px; /* 각 버튼 사이에 여백을 추가합니다. */
+        }
+        .like-btn.clicked {
+            background-color: red;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
 <h1 th:text="${board.title}">제목입니다.</h1>
 <p th:text="${board.content}">내용이 들어갈 부분입니다.</p>
-<a th:href="@{/board/modify/{id}(id=${board.id})}">수정</a>
-<a th:href="@{/board/delete(id=${board.id})}">삭제</a>
 
+<div class="btn-container">
+    <button class="like-btn" id="like-btn" onclick="toggleLike('${board.id}')">좋아요</button>
+    <a class="modify-btn" th:href="@{/board/modify/{id}(id=${board.id})}">수정</a>
+    <a class="delete-btn" th:href="@{/board/delete(id=${board.id})}">삭제</a>
+</div>
+
+<script>
+    function toggleLike(boardId) {
+        var likeBtn = document.getElementById('like-btn');
+        likeBtn.classList.toggle('clicked');
+        console.log('Like button clicked'); // 콘솔에 로그를 출력하여 함수가 호출되는지 확인합니다.
+    }
+</script>
 
 </body>
 </html>
