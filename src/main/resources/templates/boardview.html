@@ -16,7 +16,7 @@
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
-            margin-bottom: 5px; /* 각 버튼 사이에 여백을 추가합니다. */
+            margin-bottom: 5px;
         }
         .like-btn.clicked {
             background-color: red;
@@ -31,15 +31,28 @@
 
 <div class="btn-container">
     <button class="like-btn" id="like-btn" onclick="toggleLike('${board.id}')">좋아요</button>
+    <button class="bookmark-btn" id="bookmark-btn" onclick="toggleBookmark('${board.id}')">북마크</button>
     <a class="modify-btn" th:href="@{/board/modify/{id}(id=${board.id})}">수정</a>
     <a class="delete-btn" th:href="@{/board/delete(id=${board.id})}">삭제</a>
 </div>
 
-<script>
+<script th:inline="javascript">
     function toggleLike(boardId) {
         var likeBtn = document.getElementById('like-btn');
         likeBtn.classList.toggle('clicked');
-        console.log('Like button clicked'); // 콘솔에 로그를 출력하여 함수가 호출되는지 확인합니다.
+        console.log('Like button clicked');
+    }
+
+    function toggleBookmark(boardId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/board/bookmark/" + boardId, true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                console.log("Bookmark toggled successfully");
+            }
+        };
+        xhr.send(JSON.stringify({ id: boardId }));
     }
 </script>
 

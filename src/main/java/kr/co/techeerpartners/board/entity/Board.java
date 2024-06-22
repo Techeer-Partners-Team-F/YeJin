@@ -15,4 +15,7 @@ public class Board {
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Like> likes;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Bookmark> bookmarks;
 }
